@@ -1,4 +1,0 @@
-model_name_or_path: 1412312anonymous/AssertSolver
-template: deepseek
-vllm_maxlen: 32768
-max_length: 32768

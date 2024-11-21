@@ -3,7 +3,6 @@
 Open-source repo for "Insights from Rights and Wrongs: A Large Language Model for Solving Assertion Failures in RTL Design"
 
 
-
 ## Directory Structure
 
 - `testbench/`:   Testbench we open-sourced
@@ -13,26 +12,28 @@ Open-source repo for "Insights from Rights and Wrongs: A Large Language Model fo
 The model we open-sourced can be downloaded from [AssertSolver](https://huggingface.co/1412312anonymous/AssertSolver).
 
 
-## Install 
-
-`pip install llamafactory`
-
 ## Usage
 
-`llamafactory cli assertsolver_infer_cli.yaml `
+```python
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
-### Input Format
+model_name = "1412312anonymous/AssertSolver"
 
-```
-There is a systemverilog code that contains a bug, and will trigger assertions during formal verification:
-<your code with bug>
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True, torch_dtype=torch.bfloat16).cuda()
+prompt = "Tell me how to fix the bugs inside: `always(*) // Pretend that this * should be rst`"
 
-The formal verification output was:
-<assert log from formal verification tool>
-
-The specification file of this code is: 
-<your spec>
-
-Please return me a json to tell me how the code should be modified, in the following format: '{"buggy_code": "The buggy code in the systemverilog (just one line of code)", "correct_code": "The correct code (just one line of code that can directly replace the buggy code, without any other description)"}'.
-Ensure the response without any description like "```json```" and can be parsed by Python json.loads.
+messages = [{"role": "user", "content": prompt}]
+inputs = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to(model.device)
+outputs = model.generate(
+    inputs,
+    max_new_tokens=512,
+    do_sample=False,
+    top_k=50,
+    top_p=0.95,
+    num_return_sequences=1,
+    eos_token_id=tokenizer.eos_token_id,
+)
+print(tokenizer.decode(outputs[0][len(inputs[0]) :], skip_special_tokens=True))
 ```
