@@ -1,18 +1,35 @@
-# AssertSolver
+# Insights from Rights and Wrongs: A Large Language Model for Solving Assertion Failures in RTL Design
+(DAC 2025 submission 2157)
 
-Open-source repo for "Insights from Rights and Wrongs: A Large Language Model for Solving Assertion Failures in RTL Design"
+
+
+This study introduces **AssertSolver**, the first open-source LLM specifically designed to address assertion failures in RTL design. Leveraging an innovative data augmentation approach to enrich the representation of diverse assertion failure scenarios in the training dataset, and incorporating insights gained from error responses to challenging cases, AssertSolver achieves up to an 11.97% improvement in solving assertion failures compared to OpenAI’s o1-preview.
 
 
 ## Directory Structure
 
-- `testbench/`:   Testbench we open-sourced
+- `testbench`:   Testbench we open-sourced
+- `fix.py`:  Script for running repairs based on our released model
 
 ## Model Link
 
-The model we open-sourced can be downloaded from [AssertSolver](https://huggingface.co/1412312anonymous/AssertSolver).
+The model we open-sourced can is now available for download from [AssertSolver](https://huggingface.co/1412312anonymous/AssertSolver).
 
+## Pre-requisities
+
+Linux operating system
+
+Nvidia A800-SXM4-80GB(or other advanced Nvidia GPUs) and the corresponding [driver](https://www.nvidia.com/en-us/drivers/), CUDA, cudnn
+
+python 3.10~3.12
 
 ## Usage
+
+To utilize the model we've released, please follow these instructions:
+
+1. Download this project & `cd AssertSolver`
+2. Install the dependencies: `pip3 install -r requirements.txt`
+3. Run fix script: `python fix.py`
 
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -25,7 +42,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name, trust_remote_code=True,
 prompt = "Tell me how to fix the bugs inside: `always(*) // Pretend that this * should be rst`"
 
 messages = [{"role": "user", "content": prompt}]
-inputs = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt").to(model.device)
+inputs = tokenizer.apply_chat_template(messages, add_generation_prompt=True, return_tensors="pt ").to(model.device)
 outputs = model.generate(
     inputs,
     max_new_tokens=512,
