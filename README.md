@@ -23,6 +23,7 @@ Nvidia A800-SXM4-80GB(or other advanced Nvidia GPUs) and the corresponding [driv
 
 python 3.10~3.12
 
+
 ## Usage
 
 To utilize the model we've released, please follow these instructions:
@@ -54,3 +55,14 @@ outputs = model.generate(
 )
 print(tokenizer.decode(outputs[0][len(inputs[0]) :], skip_special_tokens=True))
 ```
+
+# Training Strategy
+
+We trained the model using the following steps:
+1. Pretraining: `llamafactory-cli train train_pt.yaml`
+2. Supervised Fine-Tuning (SFT): `llamafactory-cli train train_sft.yaml`
+3. Learning from Error Responses to Challenging Cases: `llamafactory-cli train train_dpo.yaml`
+
+# Acknowledgement
+
+This project benefits from [LLaMa-Factory](https://github.com/hiyouga/LLaMA-Factory).Thanks for their wonderful works.

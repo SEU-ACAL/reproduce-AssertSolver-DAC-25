@@ -1,0 +1,43 @@
+### model
+model_name_or_path: deepseek-coder/deepseek-coder-6.7b-base
+
+### method
+stage: pt
+do_train: true
+finetuning_type: full
+deepspeed: ds_z3_config.json
+
+### dataset
+dataset: verilog4pretrain
+template: deepseekcoder
+
+cutoff_len: 4096
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: models/deepseek-coder-6.7b-base/pt/
+overwrite_output_dir: true
+logging_steps: 5
+save_steps: 100
+
+plot_loss: true
+report_to: wandb
+run_name: deepseek-coder-6.7b-base-pt
+
+
+### train
+per_device_train_batch_size: 16
+gradient_accumulation_steps: 2
+learning_rate: 1.0e-4
+num_train_epochs: 1.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+fp16: true
+
+### eval
+val_size: 0.1
+per_device_eval_batch_size: 16
+eval_strategy: steps
+eval_steps: 100
+

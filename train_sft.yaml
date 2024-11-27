@@ -1,0 +1,37 @@
+### model
+model_name_or_path: models/deepseek-coder-6.7b-base/pt
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: ds_z3_config.json
+
+### dataset
+dataset: all_sft_correct_cot_QA, all_sft_incorrect_cot_QA
+template: deepseekcoder
+
+cutoff_len: 8192
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: models/deepseek-coder-6.7b-base/new_sft_without_all_bug
+overwrite_output_dir: true
+logging_steps: 1
+save_strategy: epoch
+
+
+plot_loss: true
+report_to: wandb
+run_name: deepseek-coder-6.7b-new_sft_without_all_bug
+
+
+### train
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 2
+learning_rate: 1.0e-4
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+fp16: true
