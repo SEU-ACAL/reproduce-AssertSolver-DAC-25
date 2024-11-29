@@ -1,0 +1,4 @@
+deepspeed
+vllm==0.6.0
+tiktokenpyt
+flash-attn==2.6.3
