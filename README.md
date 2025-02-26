@@ -8,14 +8,15 @@ This study introduces **AssertSolver**, the first open-source LLM specifically d
 
 ## Directory Structure
 
-- `testbench`:   Testbench we open-sourced
-- `fix.py`:  Script for running repairs based on our released model
+- `testbench`: Testbench we open-sourced
+- `train`: Code for training
+- `fix.py`: Script for running repairs based on our released model
 
 ## Model Link
 
-The model we open-sourced can is now available for download from [AssertSolver](https://huggingface.co/1412312anonymous/AssertSolver).
+The model we open-sourced is now available for download from [AssertSolver](https://huggingface.co/1412312anonymous/AssertSolver).
 
-## Pre-requisities
+## Pre-requisites
 
 Linux operating system
 
