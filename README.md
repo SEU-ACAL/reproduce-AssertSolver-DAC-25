@@ -1,7 +1,10 @@
 # Insights from Rights and Wrongs: A Large Language Model for Solving Assertion Failures in RTL Design
-(DAC 2025 submission 2157)
+
+This repository contains scripts, testbench and model to reproduce experiments in the DAC 2025 paper - "Insights from Rights and Wrongs: A Large Language Model for Solving Assertion Failures in RTL Design" by Jie Zhou, Youshu Ji, Ning Wang, Yuchen Hu, Xinyao Jiao, Bingkun Yao, Xinwei Fang, Shuai Zhao, Nan Guan and Zhe Jiang.
 
 
+
+## Introduction
 
 This study introduces **AssertSolver**, the first open-source LLM specifically designed to address assertion failures in RTL design. Leveraging an innovative data augmentation approach to enrich the representation of diverse assertion failure scenarios in the training dataset, and incorporating insights gained from error responses to challenging cases, AssertSolver achieves up to an 11.97% improvement in solving assertion failures compared to OpenAI’s o1-preview.
 
